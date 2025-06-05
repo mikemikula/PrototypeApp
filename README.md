@@ -2,6 +2,9 @@
 
 A modern, responsive marketing site with lead generation capabilities for a Salesforce consultancy. Built with Next.js 15, TypeScript, Tailwind CSS v4, and Prisma.
 
+![image](https://github.com/user-attachments/assets/f14349cc-c4aa-40e9-a76d-ff0fed2fd6ef)
+![image](https://github.com/user-attachments/assets/6ae4419f-ee69-42bd-a451-20f769d0d2d1)
+
 ## Features
 
 - 🎯 **Lead Generation Form**: Captures visitor details and syncs to Salesforce
