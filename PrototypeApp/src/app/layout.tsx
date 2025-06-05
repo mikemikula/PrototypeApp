@@ -1,5 +1,3 @@
-"use client";
-
 import '@/app/globals.css';
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
@@ -47,4 +45,4 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </body>
     </html>
   );
-} 
+}

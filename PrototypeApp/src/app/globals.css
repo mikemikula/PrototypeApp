@@ -1,8 +1,9 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Custom global styles */
 
-html, body {
+html,
+body {
   @apply bg-white text-gray-900 antialiased;
 }
 
@@ -10,4 +11,4 @@ html, body {
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-} 
+}

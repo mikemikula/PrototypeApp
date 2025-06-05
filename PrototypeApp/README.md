@@ -34,6 +34,7 @@ A modern, responsive marketing site with lead generation capabilities for a Sale
 ## Quick Start
 
 1. **Clone and install dependencies**:
+
    ```bash
    git clone <repository-url>
    cd sf-consultancy-leadgen
@@ -41,18 +42,21 @@ A modern, responsive marketing site with lead generation capabilities for a Sale
    ```
 
 2. **Set up environment variables**:
+
    ```bash
    cp .env.example .env
    # Edit .env with your actual values
    ```
 
 3. **Set up database**:
+
    ```bash
    pnpm db:push
    pnpm db:generate
    ```
 
 4. **Run development server**:
+
    ```bash
    pnpm dev
    ```
@@ -93,17 +97,19 @@ src/
 Copy `.env.example` to `.env` and configure:
 
 - **DATABASE_URL**: PostgreSQL connection string
-- **SALESFORCE_***: Salesforce OAuth2 credentials
-- **RATE_LIMIT_***: API rate limiting configuration
+- **SALESFORCE\_\***: Salesforce OAuth2 credentials
+- **RATE*LIMIT*\***: API rate limiting configuration
 
 ## Deployment
 
 1. **Verify everything works**:
+
    ```bash
    pnpm verify
    ```
 
 2. **Build for production**:
+
    ```bash
    pnpm build
    ```
@@ -119,4 +125,4 @@ Copy `.env.example` to `.env` and configure:
 
 ## License
 
-Private - All rights reserved 
+Private - All rights reserved

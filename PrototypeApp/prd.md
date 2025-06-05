@@ -1,49 +1,59 @@
 # Salesforce Consultancy – Home Page PRD (MVP)
 
 ## 1. Purpose
+
 Deliver a **single-page marketing site** with an embedded **lead-generation form** that:
+
 1. Persists submissions to PostgreSQL via Prisma.
 2. Provides immediate UX feedback (success / error).
 
 > Out of scope: CMS, blog, testimonial slider, advanced analytics, multi-lang.
 
 ## 2. Success Criteria
-| KPI | Target |
-|-----|--------|
-| API P95 latency | < 250 ms |
-| Form submission error rate | < 0.1 % |
-| Deployment frequency | ≥ 1 per week |
+
+| KPI                        | Target       |
+| -------------------------- | ------------ |
+| API P95 latency            | < 250 ms     |
+| Form submission error rate | < 0.1 %      |
+| Deployment frequency       | ≥ 1 per week |
 
 ## 3. Core User Flows
+
 1. Visitor lands on `/` and sees hero + form.
 2. Visitor submits valid details.
 3. API validates & writes to DB.
 4. UI shows confirmation; errors logged to Sentry.
 
 ## 4. Functional Requirements
+
 ### 4.1 Frontend (Next.js 15 + TS + Tailwind v4)
-* Hero section (placeholder copy & CTA).
-* Lead form fields: fullName, company, email, phone (opt), projectBudget, message (opt).
-* Form validation with Zod & react-hook-form.
-* Disable submit until valid; show loading & toast.
+
+- Hero section (placeholder copy & CTA).
+- Lead form fields: fullName, company, email, phone (opt), projectBudget, message (opt).
+- Form validation with Zod & react-hook-form.
+- Disable submit until valid; show loading & toast.
 
 ### 4.2 Backend
-* **Route**: `POST /api/leads`
-* **Validation**: shared Zod schema.
-* **DB**: Persist using Prisma model `Lead` (see §6).
-* Return 201 JSON `{id: string}` on success.
+
+- **Route**: `POST /api/leads`
+- **Validation**: shared Zod schema.
+- **DB**: Persist using Prisma model `Lead` (see §6).
+- Return 201 JSON `{id: string}` on success.
 
 ### 4.3 Observability
-* Log all errors + stack traces to Sentry.
-* Log API performance to Vercel Analytics.
+
+- Log all errors + stack traces to Sentry.
+- Log API performance to Vercel Analytics.
 
 ## 5. Non-Functional Requirements
+
 1. **Accessibility**: WCAG 2.2 AA (semantic HTML, keyboard nav).
 2. **Security**: Rate-limit 100 req/IP/min; env vars for secrets; OWASP headers.
 3. **Performance**: LCP < 1.8 s on 4G; ship only critical CSS.
 4. **Testing**: Unit (Jest) for utils; e2e (Playwright) for form happy path.
 
 ## 6. Data Model (Prisma)
+
 ```prisma
 model Lead {
   id            String   @id @default(cuid())
@@ -59,20 +69,22 @@ model Lead {
 ```
 
 ## 7. Tech Stack & Tooling
-* **Next.js 15** (App Router, Server Actions)
-* **TypeScript** – `strict`.
-* **Tailwind CSS v4** – utility-first, BEM class names.
-* **Prisma 5** + **PostgreSQL 15**.
-* **pnpm** workspaces; run `pnpm verify` in CI.
-* **ESLint + Prettier**, Husky pre-commit hook.
+
+- **Next.js 15** (App Router, Server Actions)
+- **TypeScript** – `strict`.
+- **Tailwind CSS v4** – utility-first, BEM class names.
+- **Prisma 5** + **PostgreSQL 15**.
+- **pnpm** workspaces; run `pnpm verify` in CI.
+- **ESLint + Prettier**, Husky pre-commit hook.
 
 ## 8. Project Milestones
-| Week | Deliverable |
-|------|-------------|
-| 1 | Repo setup, DB schema, CI/CD pipeline |
-| 2 | Frontend form + validation |
-| 3 | Backend API + DB integration |
-| 4 | Tests & prod deploy |
+
+| Week | Deliverable                           |
+| ---- | ------------------------------------- |
+| 1    | Repo setup, DB schema, CI/CD pipeline |
+| 2    | Frontend form + validation            |
+| 3    | Backend API + DB integration          |
+| 4    | Tests & prod deploy                   |
 
 # File Tree – Salesforce Consultancy MVP
 
@@ -138,4 +150,4 @@ PrototypeApp/
    └─ pre-commit                     # Lint-staged & tests gate
 ```
 
-> Note: Adjust or extend paths as the project evolves (e.g., add CI workflow under `.github/`). 
+> Note: Adjust or extend paths as the project evolves (e.g., add CI workflow under `.github/`).

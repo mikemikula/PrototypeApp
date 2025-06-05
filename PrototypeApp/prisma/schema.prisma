@@ -15,6 +15,5 @@ model Lead {
   phone         String?
   projectBudget String
   message       String?
-  salesforceId  String?
   createdAt     DateTime @default(now())
 } 
