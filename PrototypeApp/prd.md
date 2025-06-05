@@ -3,8 +3,7 @@
 ## 1. Purpose
 Deliver a **single-page marketing site** with an embedded **lead-generation form** that:
 1. Persists submissions to PostgreSQL via Prisma.
-2. Creates a Lead record in Salesforce via REST API.
-3. Provides immediate UX feedback (success / error).
+2. Provides immediate UX feedback (success / error).
 
 > Out of scope: CMS, blog, testimonial slider, advanced analytics, multi-lang.
 
@@ -19,8 +18,7 @@ Deliver a **single-page marketing site** with an embedded **lead-generation form
 1. Visitor lands on `/` and sees hero + form.
 2. Visitor submits valid details.
 3. API validates & writes to DB.
-4. API calls Salesforce to create Lead.
-5. UI shows confirmation; errors logged to Sentry.
+4. UI shows confirmation; errors logged to Sentry.
 
 ## 4. Functional Requirements
 ### 4.1 Frontend (Next.js 15 + TS + Tailwind v4)
@@ -33,7 +31,6 @@ Deliver a **single-page marketing site** with an embedded **lead-generation form
 * **Route**: `POST /api/leads`
 * **Validation**: shared Zod schema.
 * **DB**: Persist using Prisma model `Lead` (see §6).
-* **Salesforce**: OAuth2 client-credentials; retry up to 3× with exp-backoff on 5xx.
 * Return 201 JSON `{id: string}` on success.
 
 ### 4.3 Observability
@@ -75,7 +72,7 @@ model Lead {
 | 1 | Repo setup, DB schema, CI/CD pipeline |
 | 2 | Frontend form + validation |
 | 3 | Backend API + DB integration |
-| 4 | Salesforce integration, tests, prod deploy |
+| 4 | Tests & prod deploy |
 
 # File Tree – Salesforce Consultancy MVP
 
@@ -122,7 +119,6 @@ PrototypeApp/
 │  │
 │  ├─ lib/
 │  │  ├─ prisma.ts                   # Prisma singleton client
-│  │  ├─ salesforce.ts               # Helper to create Salesforce leads
 │  │  └─ validators/
 │  │     └─ leadSchema.ts            # Zod schema + type exports
 │  │

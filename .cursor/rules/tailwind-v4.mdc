@@ -1,0 +1,22 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Simplified installation
+We've streamlined the setup process a ton in v4.0, reducing the number of steps and removing a lot of boilerplate.
+
+1. Install Tailwind CSS
+npm i tailwindcss @tailwindcss/postcss;
+2. Add the PostCSS plugin
+export default {
+  plugins: ["@tailwindcss/postcss"],
+};
+3. Import Tailwind in your CSS
+@import "tailwindcss";
+With the improvements we've made to this process for v4.0, Tailwind feels more light-weight than ever:
+
+Just one-line of CSS — no more @tailwind directives, just add @import "tailwindcss" and start building.
+Zero configuration — you can start using the framework without configuring anything, not even the paths to your template files.
+No external plugins required — we bundle @import rules for you out of the box, and use Lightning CSS under the hood for vendor prefixing and modern syntax transforms.
+Sure you only go through this once per project, but it adds up when you're starting and abandoning a different side-project every weekend.

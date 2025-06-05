@@ -11,28 +11,28 @@ This checklist guides an AI agent through building the Salesforce Consultancy ma
 ---
 
 ## 0 — Repository Bootstrap
-- [ ] `/package.json` – Initialize PNPM workspace root with Next.js 15, TypeScript **strict**, Tailwind v4, Prisma 5. Add `dev`, `build`, `start`, `verify` scripts.
-- [ ] `/pnpm-workspace.yaml` – Define workspace packages (root only for now).
-- [ ] `/.gitignore` – Ignore common Node, Next.js, and env files.
-- [ ] `/.env.example` – Template env vars for PostgreSQL (database: `sf_consultancy_leadgen_v2`) and Salesforce credentials. Include `DATABASE_URL=postgresql://user:pass@localhost:5432/sf_consultancy_leadgen_v2`.
-- [ ] `/README.md` – High-level setup + run instructions.
+- [x] `/package.json` – Initialize PNPM workspace root with Next.js 15, TypeScript **strict**, Tailwind v4, Prisma 5. Add `dev`, `build`, `start`, `verify` scripts.
+- [x] `/pnpm-workspace.yaml` – Define workspace packages (root only for now).
+- [x] `/.gitignore` – Ignore common Node, Next.js, and env files.
+- [x] `/.env.example` – Template env vars for PostgreSQL (database: `sf_consultancy_leadgen_v2`). Include `DATABASE_URL=postgresql://user:pass@localhost:5432/sf_consultancy_leadgen_v2`.
+- [x] `/README.md` – High-level setup + run instructions.
 
 ## 1 — Tooling & Config
-- [ ] `/tsconfig.json` – Strict TS config with path alias `@/*`.
-- [ ] `/next.config.mjs` – Enable App Router, TypeScript, Tailwind, and experimental settings as needed.
-- [ ] `/tailwind.config.ts` – Tailwind v4 preset with content paths `src/**/*.{ts,tsx}`.
-- [ ] `/postcss.config.js` – Tailwind + Autoprefixer.
-- [ ] `/.eslintrc.json` + `/.prettierrc` – Lint & format rules per user guidelines.
-- [ ] `/.husky/pre-commit` – Lint-staged + `pnpm verify` gate.
+- [x] `/tsconfig.json` – Strict TS config with path alias `@/*`.
+- [x] `/next.config.mjs` – Enable App Router, TypeScript, Tailwind, and experimental settings as needed.
+- [x] `/tailwind.config.ts` – Tailwind v4 preset with content paths `src/**/*.{ts,tsx}`.
+- [x] `/postcss.config.js` – Tailwind + Autoprefixer.
+- [x] `/.eslintrc.json` + `/.prettierrc` – Lint & format rules per user guidelines.
+- [x] `/.husky/pre-commit` – Lint-staged + `pnpm verify` gate.
 
 ## 2 — Database
-- [ ] `/prisma/schema.prisma` – Add `Lead` model per PRD §6.  Configure PostgreSQL datasource & generator.
-- [ ] `/prisma/seed.ts` – Optional seed script placeholder.
-- [ ] `/src/lib/prisma.ts` – Prisma singleton client (fail-fast on errors).
+- [x] `/prisma/schema.prisma` – Add `Lead` model per PRD §6.  Configure PostgreSQL datasource & generator.
+- [x] `/prisma/seed.ts` – Optional seed script placeholder.
+- [x] `/src/lib/prisma.ts` – Prisma singleton client (fail-fast on errors).
 
 ## 3 — Global App Shell
-- [ ] `/src/app/globals.css` – Import Tailwind base/components/utilities.
-- [ ] `/src/app/layout.tsx` – Root `<html>` & `<body>` with metadata, global providers.
+- [x] `/src/app/globals.css` – Import Tailwind base/components/utilities.
+- [x] `/src/app/layout.tsx` – Root `<html>` & `<body>` with metadata, global providers.
 
 ## 4 — Home Page & Components
 - [ ] `/src/components/Hero/Hero.tsx` – Marketing hero section (BEM classes).
@@ -44,8 +44,7 @@ This checklist guides an AI agent through building the Salesforce Consultancy ma
 - [ ] `/src/lib/validators/leadSchema.ts` – Zod schema export & TS types.
 
 ## 6 — API Layer
-- [ ] `/src/app/api/leads/route.ts` – `POST /api/leads` handler: validate, persist to DB, call Salesforce, return `201 {id}`.  Include 100 req/IP/min rate-limit & error handling.
-- [ ] `/src/lib/salesforce.ts` – OAuth2 client-credentials helper with 3× retry + exp-backoff.
+- [ ] `/src/app/api/leads/route.ts` – `POST /api/leads` handler: validate, persist to DB, return `201 {id}`.  Include 100 req/IP/min rate-limit & error handling.
 
 ---
 

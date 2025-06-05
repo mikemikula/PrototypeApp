@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+/* Custom global styles */
+
+html, body {
+  @apply bg-white text-gray-900 antialiased;
+}
+
+/* Font smoothing */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+} 
