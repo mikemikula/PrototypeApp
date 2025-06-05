@@ -1,0 +1,55 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# File Structure & Organization
+
+## Standard Project Layout
+Follow the file structure defined in [prd.md](mdc:prd.md). All paths relative to repository root:
+
+### Root Configuration Files
+- `package.json` - Root manifest with pnpm scripts (dev, build, start, verify)
+- `pnpm-workspace.yaml` - Workspace definition
+- `tsconfig.json` - TypeScript strict config with `@/*` path alias
+- `next.config.mjs` - Next.js 15 App Router configuration
+- `tailwind.config.ts` - Tailwind v4 with content paths `src/**/*.{ts,tsx}`
+- `postcss.config.js` - Tailwind + Autoprefixer
+- `.env.example` - Environment template with PostgreSQL and Salesforce vars
+
+### Source Code Organization (`/src`)
+```
+src/
+├── app/
+│   ├── layout.tsx          # Root layout with <html>, <body>, metadata
+│   ├── globals.css         # Tailwind imports
+│   ├── page.tsx           # Home page (Hero + LeadForm)
+│   └── api/leads/route.ts  # POST /api/leads endpoint
+├── components/
+│   ├── Hero/Hero.tsx       # Marketing hero section
+│   └── LeadForm/
+│       ├── LeadForm.tsx    # Form UI component
+│       └── useLeadForm.ts  # react-hook-form logic
+├── lib/
+│   ├── prisma.ts          # Prisma singleton client
+│   ├── salesforce.ts      # OAuth2 Salesforce helper
+│   └── validators/leadSchema.ts # Zod schema + types
+└── types/index.d.ts       # Global TypeScript types
+```
+
+### Database & Testing
+- `prisma/schema.prisma` - Lead model + PostgreSQL datasource
+- `tests/unit/` - Jest unit tests
+- `tests/e2e/` - Playwright end-to-end tests
+
+## Import Conventions
+- **Between components**: Use `@/` alias imports (e.g., `@/components/Hero`)
+- **Within same directory**: Use `./` relative imports
+- **Always use index files**: Create barrel exports for clean imports
+- **Remove unused imports**: Critical requirement per user rules
+
+## File Naming
+- **Components**: PascalCase folders with PascalCase files (`Hero/Hero.tsx`)
+- **Utilities**: camelCase files (`useLeadForm.ts`)
+- **API routes**: lowercase with Next.js conventions (`route.ts`)
+- **CSS classes**: BEM methodology for component classes

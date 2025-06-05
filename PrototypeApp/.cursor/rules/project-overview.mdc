@@ -1,0 +1,37 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Salesforce Consultancy Project Overview
+
+## Project Purpose
+This is a **single-page marketing site** with lead generation capabilities for a Salesforce consultancy. The project requirements are defined in [prd.md](mdc:prd.md) and implementation steps in [prd-checklist.md](mdc:prd-checklist.md).
+
+## Tech Stack (Next.js 15 + Modern Tools)
+- **Next.js 15** with App Router
+- **TypeScript** in strict mode
+- **Tailwind CSS v4** with utility-first approach
+- **Prisma 5** + **PostgreSQL 15**
+- **pnpm** for package management (NEVER use npm)
+- **react-hook-form** + **Zod** for form validation
+- **Salesforce REST API** integration with OAuth2
+
+## Core Functionality
+1. **Hero Section**: Marketing content with compelling CTA
+2. **Lead Form**: Captures visitor details (fullName, company, email, phone, projectBudget, message)
+3. **Database**: Persists leads to PostgreSQL via Prisma
+4. **Salesforce Integration**: Creates Lead records via REST API with retry logic
+5. **Observability**: Error logging and performance monitoring
+
+## Success Metrics
+- API P95 latency < 250ms
+- Form submission error rate < 0.1%
+- WCAG 2.2 AA accessibility compliance
+- LCP < 1.8s on 4G networks
+
+## Key Constraints
+- Out of scope: CMS, blog, testimonials, multi-language support
+- Security: Rate limiting (100 req/IP/min), environment variables for secrets
+- Testing: Unit tests with Jest, e2e with Playwright
+- CI/CD: `pnpm verify` must pass before deployment

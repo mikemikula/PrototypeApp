@@ -1,0 +1,143 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Data Models & API Specifications
+
+## Lead Data Model (Prisma Schema)
+Based on requirements in [prd.md](mdc:prd.md), implement the Lead model exactly as specified:
+
+```prisma
+model Lead {
+  id            String   @id @default(cuid())
+  fullName      String   // Required: Full name of the lead
+  company       String   // Required: Company name
+  email         String   @unique // Required: Email address (unique constraint)
+  phone         String?  // Optional: Phone number
+  projectBudget String   // Required: Project budget range
+  message       String?  // Optional: Additional message
+  salesforceId  String?  // Optional: Salesforce Lead ID after sync
+  createdAt     DateTime @default(now()) // Automatic timestamp
+}
+```
+
+## Form Validation Schema (Zod)
+Create shared validation in `/src/lib/validators/leadSchema.ts`:
+
+```typescript
+export const leadSchema = z.object({
+  fullName: z.string().min(2, "Full name must be at least 2 characters"),
+  company: z.string().min(2, "Company name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().optional(),
+  projectBudget: z.string().min(1, "Please select a project budget"),
+  message: z.string().optional()
+});
+
+export type LeadFormData = z.infer<typeof leadSchema>;
+```
+
+## API Endpoint: POST /api/leads
+
+### Request Format
+```typescript
+interface LeadRequest {
+  fullName: string;
+  company: string;
+  email: string;
+  phone?: string;
+  projectBudget: string;
+  message?: string;
+}
+```
+
+### Response Format
+```typescript
+// Success (201 Created)
+interface LeadSuccessResponse {
+  id: string; // Database-generated CUID
+}
+
+// Error (400 Bad Request)
+interface LeadErrorResponse {
+  error: string;
+  details?: string[];
+}
+```
+
+### Implementation Requirements
+1. **Rate Limiting**: 100 requests per IP per minute
+2. **Validation**: Use shared Zod schema for input validation
+3. **Database**: Persist to PostgreSQL via Prisma
+4. **Salesforce Integration**: Create Lead record via REST API
+5. **Error Handling**: Proper HTTP status codes and error messages
+6. **Logging**: Log all errors with stack traces (no sensitive data)
+
+## Salesforce Integration Specifications
+
+### OAuth2 Configuration
+- **Grant Type**: Client Credentials
+- **Retry Logic**: Up to 3 attempts with exponential backoff
+- **Error Handling**: Graceful degradation if Salesforce is unavailable
+- **Timeout**: 10 seconds maximum per request
+
+### Lead Creation Payload
+```typescript
+interface SalesforceLeadPayload {
+  FirstName: string;
+  LastName: string;
+  Company: string;
+  Email: string;
+  Phone?: string;
+  Description?: string;
+  // Custom fields for project budget and source tracking
+}
+```
+
+### Environment Variables Required
+```env
+# Database Configuration
+DATABASE_URL=postgresql://user:pass@localhost:5432/sf_consultancy_leadgen_v2
+
+# Salesforce OAuth2 Configuration
+SALESFORCE_CLIENT_ID=your_client_id
+SALESFORCE_CLIENT_SECRET=your_client_secret
+SALESFORCE_USERNAME=your_username
+SALESFORCE_PASSWORD=your_password
+SALESFORCE_SECURITY_TOKEN=your_security_token
+SALESFORCE_ENVIRONMENT=sandbox # or production
+```
+
+## Form Component Requirements
+
+### Field Specifications
+- **Full Name**: Text input, required, min 2 characters
+- **Company**: Text input, required, min 2 characters
+- **Email**: Email input, required, unique validation
+- **Phone**: Tel input, optional, format validation
+- **Project Budget**: Select dropdown with predefined ranges
+- **Message**: Textarea, optional, max 500 characters
+
+### UX Requirements
+- **Disable submit** until form is valid
+- **Loading state** during submission
+- **Success feedback** with confirmation message
+- **Error feedback** with specific field errors
+- **Accessibility**: Proper labels, ARIA attributes, keyboard navigation
+
+## Database Connection Pattern
+Use Prisma singleton pattern to prevent connection exhaustion:
+
+```typescript
+// /src/lib/prisma.ts
+import { PrismaClient } from '@prisma/client';
+
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
+};
+
+export const prisma = globalForPrisma.prisma ?? new PrismaClient();
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+```

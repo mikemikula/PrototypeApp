@@ -1,0 +1,71 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Implementation Conventions & Best Practices
+
+## Package Management (CRITICAL)
+- **ONLY use pnpm** - NEVER use npm
+- Run `pnpm verify` after every implementation
+- Ensure all workspace dependencies are properly installed
+- Respect `.gitignore` patterns in all scripts
+
+## Code Quality Standards
+### SOLID, DRY, SoC Architecture
+- **Single Responsibility**: Each component/function has one clear purpose
+- **Open/Closed**: Design for extension without modification
+- **Liskov Substitution**: Proper inheritance and interface contracts
+- **Interface Segregation**: Small, focused interfaces
+- **Dependency Inversion**: Depend on abstractions, not concretions
+- **Don't Repeat Yourself**: Extract common logic into reusable utilities
+- **Separation of Concerns**: Clear boundaries between UI, business logic, and data
+
+### TypeScript Requirements
+- **Strict mode enabled** - No `any` types allowed
+- Define interfaces for all API responses
+- Use type guards for unknown data validation
+- Add explicit return types to all functions
+- Replace all `any` with specific types
+- Fix `useCallback` dependency arrays as needed
+
+### Import & Export Rules
+- **CRITICAL**: Remove all unused imports and variables
+- Use `@/` alias imports between components
+- Use `./` relative imports within same directory
+- Create index files for barrel exports
+- Escape unescaped quotes per `react/no-unescaped-entities`
+
+## Error Handling Best Practices
+- Follow fail-fast debugging approach
+- Capture all frontend console errors to server logs
+- Ensure error messages are clear and actionable
+- Implement proper error boundaries in React components
+- Log errors with full stack traces
+
+## UI/UX Standards
+- **Modern responsive design** with cross-browser/device support
+- **NO inline styles** or `!important` declarations
+- Fix CSS with proper selector hierarchy, not force
+- Use **BEM methodology** for component CSS classes
+- Ensure WCAG 2.2 AA accessibility compliance
+- Implement semantic HTML with proper keyboard navigation
+
+## API & Database Patterns
+- Validate all inputs with Zod schemas (shared between client/server)
+- Implement rate limiting (100 requests/IP/minute)
+- Use Prisma singleton pattern for database connections
+- Implement retry logic with exponential backoff for external APIs
+- Return proper HTTP status codes (201 for creation, proper error codes)
+
+## Comments & Documentation
+- **Write best practice comments** explaining purpose and logic
+- Document key logic for maintainability
+- Comment complex business logic and algorithms
+- Avoid obvious comments that restate the code
+
+## Forbidden Commands (NEVER RUN)
+- `rm -rf` (unless with exact, safe path)
+- `pkill -f node`
+- `docker rm -f $(docker ps -aq)`
+- `pnpm dev` (use appropriate environment-specific commands)
